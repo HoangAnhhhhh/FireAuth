@@ -7,6 +7,12 @@ Created from templates made available by Stagehand under a BSD-style
 [license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
 
 
+# Route:
+1. signup
+2. signin
+3. homepage
+4. database
+
 # Process:
 1. finished sigin, signup functions
 2. created homepage component

@@ -1,18 +1,26 @@
+// cores
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'dart:html';
+
+// routers
 import 'package:angular_router/angular_router.dart';
+import '../../services/userService.dart';
+
+// email validator
 import 'package:email_validator/email_validator.dart';
 import '../../routes/routes.dart';
-import '../../services/userService.dart';
+
+// crypto
 import 'package:dbcrypt/dbcrypt.dart';
-import 'dart:html';
+
 
 @Component(
     selector: 'signup',
     templateUrl: 'signup.html',
     styleUrls: ['signup.css'],
     directives: [coreDirectives, formDirectives])
-class SignUpComponent implements OnInit {
+class SignUpComponent{
   final UserService _userService;
   final Router _router;
   SignUpComponent(this._userService, this._router);
@@ -26,7 +34,7 @@ class SignUpComponent implements OnInit {
       this._userService.signUpWithFireAuth(user).whenComplete(() {
         this._router.navigate(Routes.signin.toUrl());
       }).then((u) {
-        var hashedPassword = new DBCrypt().hashpw(user['password'], new DBCrypt().gensalt());
+        String hashedPassword = new DBCrypt().hashpw(user['password'], new DBCrypt().gensalt());
         user['password'] =hashedPassword;
         this._userService.addUser(user);
       }).catchError((onError) => print(onError));
@@ -47,6 +55,4 @@ class SignUpComponent implements OnInit {
   bool checkValid(Map<String, dynamic> user) {
     return EmailValidator.validate(user['email']) == true;
   }
-
-  void ngOnInit() {}
 }

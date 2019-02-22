@@ -1,10 +1,14 @@
+// cores
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
-import 'package:angular_router/angular_router.dart';
-import '../../services/userService.dart';
-import '../../routes/routes.dart';
-import 'dart:async';
 import 'dart:html';
+
+// routers
+import 'package:angular_router/angular_router.dart';
+import '../../routes/routes.dart';
+
+// services
+import '../../services/userService.dart';
 
 @Component(
     selector: 'signin',
@@ -16,20 +20,24 @@ class SignInComponent {
   final Router _router;
   SignInComponent(this._userService, this._router);
 
-  void signin(Map<String, dynamic> user) async {
+  void signin(Map<String, dynamic> user) {
     if (checkEmpty(user)) {
-      var u =await this._userService.signInWithFireAuth(user).then((u) => u.user);
-      if (u.emailVerified == true)
-        this._router.navigate(Routes.homepage.toUrl());
-      else {
-        window.alert('Please check your mail and verify it, then login again!');
-        u.sendEmailVerification();
-      }
-    } else{
+      this._userService.signInWithFireAuth(user).then((u) {
+        if (u.user.emailVerified == true)
+          this._router.navigate(Routes.homepage.toUrl());
+        else {
+          window.alert(
+              'We now need to verify your email address. We\'ve sent an email to ${u.user.email} to verify your address. Please click the link in that email to continue');
+          u.user.sendEmailVerification();
+        }
+      }).catchError(
+          (onError) => window.alert('email or password is incorrect, please check again!'));
+    } else {
       querySelector('#email').classes.add('empty');
       querySelector('#password').classes.add('empty');
-      window.alert('Email & Password must not empty!!');
-    };
+      window.alert('email or password must not empty!!');
+    }
+    ;
   }
 
   bool checkEmpty(Map<String, dynamic> user) {

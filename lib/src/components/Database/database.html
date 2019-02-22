@@ -1,0 +1,6 @@
+<p>database's work</p>
+<ul *ngIf="users != null">
+    <li *ngFor="let user of users">
+        <p>{{user.data()}}</p>
+    </li>
+</ul>

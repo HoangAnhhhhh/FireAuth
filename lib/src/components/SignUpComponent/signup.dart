@@ -39,7 +39,7 @@ class SignUpComponent{
         this._userService.addUser(user);
       }).catchError((onError) => print(onError));
     } else {
-      window.alert('You have to fullfill the form');
+      window.alert('you have to fullfill the form, please!!');
     }
   }
 

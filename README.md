@@ -10,8 +10,7 @@ Created from templates made available by Stagehand under a BSD-style
 # Process:
 1. finished sigin, signup functions
 2. created homepage component
-
+3. display user's info to homepage
 
 # To Do:
 1. optimize all the code.
-2. display user's info to homepage

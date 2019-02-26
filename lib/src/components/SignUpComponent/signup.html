@@ -1,31 +1,96 @@
-<body>
-    <h3>Sign Up Form</h3>
-    <div class="container">
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" name="firstname" placeholder="Your name.." #firstname>
-
-        <label for="mname">Middle Name</label>
-        <input type="text" id="mname" name="middlename" placeholder="Your middle name.." #lastname>
-
-        <label for="faname">Family Name</label>
-        <input type="text" id="faname" name="familyname" placeholder="Your family name.." #middlename>
-
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" placeholder="Your email.." #emailname>
-
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Your password.." #password>
-
-        <label for="phonenumber">Phonenumber</label>
-        <input type="text" id="phonenumber" name="phonenumber" placeholder="Your phonenumber.." #phonenumber>
-
-        <input type="button" value="Sign Up" (click)="signup({
+<div class="container">
+    <hr>
+    <h1>User Form</h1>
+    <form (ngSubmit)="onSubmit({
                 'firstname': firstname.value, 
-                'lastname':lastname.value, 
+                'familiyname':familyname.value, 
                 'middlename': middlename.value, 
-                'email': emailname.value, 
+                'email': email.value, 
                 'password': password.value,
+                'repassword': repassword.value,
                 'phonenumber': phonenumber.value
-            })">
-    </div>
-</body>
+            })" #userForm="ngForm">
+        <div class="form-group">
+            <label for="firstname">FirstName&nbsp;*</label>
+            <input type="text" class="form-control" id="firstname" required [(ngModel)]="user.firstname"
+                ngControl="firstname" #firstname="ngForm" [class.is-valid]="firstname.valid"
+                [class.is-invalid]="!firstname.valid">
+
+            <div [hidden]="firstname.valid || firstname.pristine" class="invalid-feedback">
+                Firstname is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="middlename">MiddleName&nbsp;*</label>
+            <input type="text" class="form-control" id="middlename" required [(ngModel)]="user.middlename"
+                ngControl="middlename" #middlename="ngForm" [class.is-valid]="middlename.valid"
+                [class.is-invalid]="!middlename.valid">
+
+            <div [hidden]="middlename.valid || middlename.pristine" class="invalid-feedback">
+                Middlename is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="familyname">FamilyName&nbsp;*</label>
+            <input type="text" class="form-control" id="familyname" required [(ngModel)]="user.familyname"
+                ngControl="familyname" #familyname="ngForm" [class.is-valid]="familyname.valid"
+                [class.is-invalid]="!familyname.valid">
+
+            <div [hidden]="familyname.valid || familyname.pristine" class="invalid-feedback">
+                Familyname is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email&nbsp;*</label>
+            <input type="text" class="form-control" id="email" required [(ngModel)]="user.email" ngControl="email"
+                #email="ngForm" [class.is-valid]="email.valid" [class.is-invalid]="!email.valid">
+
+            <div [hidden]="email.valid || email.pristine" class="invalid-feedback">
+                Email is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password&nbsp;*</label>
+            <input type="password" class="form-control" id="password" required [(ngModel)]="user.password"
+                ngControl="password" #password="ngForm" [class.is-valid]="password.valid"
+                [class.is-invalid]="!password.valid">
+
+            <div [hidden]="password.valid || password.pristine" class="invalid-feedback">
+                Password is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="repassword">Repassword&nbsp;*</label>
+            <input type="password" class="form-control" id="repassword" required [(ngModel)]="user.repassword"
+                ngControl="repassword" #repassword="ngForm" [class.is-valid]="repassword.valid"
+                [class.is-invalid]="!repassword.valid" (keyup)="isEqual(password.value == repassword.value)">
+
+            <div [hidden]="repassword.valid || repassword.pristine" class="invalid-feedback">
+                Repassword is required
+            </div>
+            <div [hidden]="isTrue" class="invalid-feedback">
+                Your password and confirmation password do not match
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phonenumber">PhoneNumber&nbsp;*</label>
+            <input type="text" class="form-control" id="phonenumber" required [(ngModel)]="user.phonenumber"
+                ngControl="phonenumber" #phonenumber="ngForm" [class.is-valid]="phonenumber.valid"
+                [class.is-invalid]="!phonenumber.valid" pattern="(09|01[2|6|8|9])+([0-9]{8})\b">
+
+            <div [hidden]="phonenumber.valid || phonenumber.pristine" class="invalid-feedback">
+                Phonenumber is required <br> and must be follow by phone number in VietNam
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <button [disabled]="!userForm.form.valid || isTrue == false" type="submit"
+                    class="btn btn-primary">Submit</button>
+            </div>
+            <button (click)="clear()" type="button" class="btn">
+                Clear
+            </button>
+            <small class="col text-right">*&nbsp;Required</small>
+        </div>
+    </form>
+</div>

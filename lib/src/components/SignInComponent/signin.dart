@@ -45,7 +45,7 @@ class SignInComponent implements OnInit {
     RegExp reg = new RegExp(r"iPhone|iPad|iPod|Android");
     bool isMobile = reg.hasMatch(window.navigator.userAgent);
     if (isMobile) {
-      window.alert("You are using Mobile");
+      window.alert("You are using Mobile or Tablet");
     } else {
       window.alert("You are using Desktop");
     }

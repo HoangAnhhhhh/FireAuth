@@ -19,7 +19,7 @@ import '../../models/UserCore.dart';
   directives: [coreDirectives, formDirectives, routerDirectives],
   exports: [RoutePaths, Routes],
 )
-class SignInComponent {
+class SignInComponent implements OnInit {
   final UserService _userService;
   final Router _router;
 
@@ -38,5 +38,16 @@ class SignInComponent {
       }
     }).catchError((onError) =>
         window.alert('email or password is incorrect, please check again!'));
+  }
+
+  @override
+  void ngOnInit() {
+    RegExp reg = new RegExp(r"iPhone|iPad|iPod|Android");
+    bool isMobile = reg.hasMatch(window.navigator.userAgent);
+    if (isMobile) {
+      window.alert("You are using Mobile");
+    } else {
+      window.alert("You are using Desktop");
+    }
   }
 }
